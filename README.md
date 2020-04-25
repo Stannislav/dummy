@@ -1,2 +1,2 @@
-# dummy
-Dummy repository for testing purposes
+# Dummy Repository
+This is a minimal repository for testing `git clone`.
