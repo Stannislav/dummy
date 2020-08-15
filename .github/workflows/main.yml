@@ -38,6 +38,4 @@ jobs:
     - name: Install package
       run: pip install .[tests]
     - name: PyTest
-      run: |
-        pytest
-        coverage report
+      run: pytest
