@@ -36,7 +36,7 @@ jobs:
     - name: Check Codestyle and Formatting
       run: tox -e lint
     - name: Install package
-      run: pip install .
+      run: pip install .[tests]
     - name: PyTest
       run: |
         pytest
