@@ -6,4 +6,6 @@ setup(
     package_dir={"": "src"},
     package_data={"dummy": ["resources/img.png", "resources/message.txt"]},
     packages=find_packages("src"),
+    install_requires=["Flask", "gunicorn"],
+    entry_points={"console_scripts": ["dummyweb=dummy.servers.webapp:run_my_web_app"]},
 )
