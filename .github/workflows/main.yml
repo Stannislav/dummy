@@ -21,13 +21,23 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.6'
+        architecture: 'x64'
+    - name: Display python version
+      run: python -c "import sys; print(sys.version)"
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
+    - name: Upgrade pip and install tox
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        python -m pip install --upgrade pip
+        pip install tox
+    - name: Check Codestyle and Formatting
+      run: tox -e lint
+    - name: Install package
+      run: pip install .
+    - name: PyTest
+      run: |
+        pytest
+        coverage report
