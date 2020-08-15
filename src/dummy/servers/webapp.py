@@ -54,13 +54,14 @@ def run_my_web_app(argv=None):
     parser.add_argument("--debug", action="store_true", default=False)
     args = parser.parse_args(argv)
 
-    # create_app reads the configuration from environment variables
-    os.environ["DUMMY_SECRET"] = str(args.secret)
+    if args:  # pragma: no cover
+        # create_app reads the configuration from environment variables
+        os.environ["DUMMY_SECRET"] = str(args.secret)
 
-    app = create_app()
-    app.run(host="localhost", port="8080", debug=args.debug)
+        app = create_app()
+        app.run(host="localhost", port="8080", debug=args.debug)
 
-    return 0
+    return 0  # pragma: no cover
 
 
 if __name__ == "__main__":
