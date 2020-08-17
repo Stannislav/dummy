@@ -12,6 +12,16 @@ services:
       - DUMMY_SECRET=43
     networks:
       - dummy_network
+  smartyweb:
+    container_name: smartyweb_server
+    build:
+      context: .
+      dockerfile: docker/Dockerfile-smarty
+    image: smartyweb
+    ports:
+      - "8081:8081"
+    networks:
+      - dummy_network
 
 networks:
   dummy_network:
