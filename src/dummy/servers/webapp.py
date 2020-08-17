@@ -1,8 +1,10 @@
 """The dummy webapp."""
 import argparse
+import logging
 import os
 import textwrap
 
+import requests
 from flask import Flask
 
 
@@ -15,11 +17,13 @@ def create_app():
         The flask app.
     """
     app = Flask("My web app")
+    logger = logging.getLogger("Dummy app")
 
     @app.route("/")
     def hello():
+        logger.debug("GET /")
         secret = os.getenv("DUMMY_SECRET", "no secret found")
-        message = f"""
+        page = f"""
         <head>
             <title>Dummy Web</title>
         </head>
@@ -30,7 +34,45 @@ def create_app():
             </p>
         </body>
         """
-        return textwrap.dedent(message)
+        return textwrap.dedent(page)
+
+    @app.route("/ask_smarty")
+    def ask_smarty():
+        logger.debug("GET /ask_smarty")
+
+        smarty_host = os.getenv("SMARTY_HOST")
+        smarty_port = os.getenv("SMARTY_PORT")
+        logger.debug(f"SMARTY_HOST = {smarty_host}")
+        logger.debug(f"SMARTY_PORT = {smarty_port}")
+
+        if smarty_host is not None and smarty_port is not None:
+            smarty_url = f"http://{smarty_host}:{smarty_port}"
+
+            try:
+                response = requests.get(smarty_url)
+                if response.ok:
+                    message = response.text
+                else:
+                    message = f"Smarty sent a bad response"
+            except requests.ConnectionError:
+                message = f"Couldn't reach smarty at {smarty_url}"
+        else:
+            message = "Don't know how to contact smarty"
+
+        page = f"""
+        <head>
+            <title>Dummy Web</title>
+        </head>
+        <body>
+            <h1>Ask Smarty</h1>
+            <p>
+                Let's try and ask smarty: <br>
+                &rarr; {message}
+            </p>
+        </body>
+        """
+
+        return textwrap.dedent(page)
 
     return app
 
@@ -53,6 +95,10 @@ def run_my_web_app(argv=None):
     parser.add_argument("--secret", type=int, default=42)
     parser.add_argument("--debug", action="store_true", default=False)
     args = parser.parse_args(argv)
+
+    # Logging
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG)
 
     if args:  # pragma: no cover
         # create_app reads the configuration from environment variables

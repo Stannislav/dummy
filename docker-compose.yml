@@ -1,29 +1,32 @@
 version: "3.5"
+
 services:
   dummyweb:
-    container_name: dummyweb_server
+    container_name: $DUMMY_HOST
     build:
       context: .
       dockerfile: docker/Dockerfile-webapp
     image: dummyweb
     ports:
-      - "8080:8080"
+      - "$DUMMY_PORT:8080"
     environment:
       - DUMMY_SECRET=43
+      - SMARTY_HOST=$SMARTY_HOST
+      - SMARTY_PORT=$SMARTY_PORT
     networks:
       - dummy_network
   smartyweb:
-    container_name: smartyweb_server
+    container_name: $SMARTY_HOST
     build:
       context: .
       dockerfile: docker/Dockerfile-smarty
     image: smartyweb
     ports:
-      - "8081:8081"
+      - "$SMARTY_PORT:8081"
     networks:
       - dummy_network
 
 networks:
   dummy_network:
-    name: "my_dummy_network"
+    name: "$NETWORK_NAME"
     driver: bridge

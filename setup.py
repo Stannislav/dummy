@@ -6,7 +6,7 @@ setup(
     package_dir={"": "src"},
     package_data={"dummy": ["resources/img.png", "resources/message.txt"]},
     packages=find_packages("src"),
-    install_requires=["Flask", "gunicorn"],
+    install_requires=["Flask", "gunicorn", "requests"],
     extras_require={
         "tests": ["pytest", "pytest-cov"],
         "lint": ["bandit" "black" "flake8" "isort" "pydocstyle"],
