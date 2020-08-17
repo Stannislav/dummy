@@ -5,7 +5,7 @@ services:
     container_name: $DUMMY_HOST
     build:
       context: .
-      dockerfile: docker/Dockerfile-webapp
+      dockerfile: docker/Dockerfile-dummy
     image: dummyweb
     ports:
       - "$DUMMY_PORT:8080"

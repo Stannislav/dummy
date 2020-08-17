@@ -11,8 +11,10 @@ setup(
         "tests": ["pytest", "pytest-cov"],
         "lint": ["bandit" "black" "flake8" "isort" "pydocstyle"],
     },
-    entry_points={"console_scripts": [
-        "dummyweb=dummy.servers.webapp:run_my_web_app",
-        "smartyweb=dummy.servers.smarty:run_smarty_app",
-    ]},
+    entry_points={
+        "console_scripts": [
+            "dummyweb=dummy.servers:run_dummy_app",
+            "smartyweb=dummy.servers:run_smarty_app",
+        ]
+    },
 )

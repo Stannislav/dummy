@@ -1,12 +1,12 @@
 import flask
 import pytest
 
-from dummy.servers import webapp
+from dummy.servers import get_dummy_app, run_dummy_app
 
 
 @pytest.fixture
 def dummyweb_client():
-    app = webapp.create_app()
+    app = get_dummy_app()
     assert isinstance(app, flask.Flask)
 
     app.config["TESTING"] = True
@@ -23,7 +23,7 @@ def test_create_app(dummyweb_client):
 
 def test_help(capsys):
     with pytest.raises(SystemExit) as error:
-        webapp.run_my_web_app(["--help"])
+        run_dummy_app(["--help"])
     stdout, stderr = capsys.readouterr()
 
     assert error.value.code == 0

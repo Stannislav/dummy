@@ -8,7 +8,7 @@ import requests
 from flask import Flask
 
 
-def create_app():
+def get_dummy_app():
     """Create the dummy webapp.
 
     Returns
@@ -32,6 +32,9 @@ def create_app():
             <p>
                 The secret was: {secret}
             </p>
+            <p>
+                Want to ask smarty? Click <a href="/ask_smarty">here!</a>
+            </p>
         </body>
         """
         return textwrap.dedent(page)
@@ -53,7 +56,7 @@ def create_app():
                 if response.ok:
                     message = response.text
                 else:
-                    message = f"Smarty sent a bad response"
+                    message = "Smarty sent a bad response"
             except requests.ConnectionError:
                 message = f"Couldn't reach smarty at {smarty_url}"
         else:
@@ -69,6 +72,9 @@ def create_app():
                 Let's try and ask smarty: <br>
                 &rarr; {message}
             </p>
+            <p>
+                To go back click <a href="/">here</a>.
+            </p>
         </body>
         """
 
@@ -77,8 +83,8 @@ def create_app():
     return app
 
 
-def run_my_web_app(argv=None):
-    """Run the web app in the CLI development mode.
+def run_dummy_app(argv=None):
+    """Run the dummy web app in the CLI development mode.
 
     Parameters
     ----------
@@ -104,11 +110,11 @@ def run_my_web_app(argv=None):
         # create_app reads the configuration from environment variables
         os.environ["DUMMY_SECRET"] = str(args.secret)
 
-        app = create_app()
+        app = get_dummy_app()
         app.run(host="localhost", port="8080", debug=args.debug)
 
     return 0  # pragma: no cover
 
 
 if __name__ == "__main__":
-    exit(run_my_web_app())
+    exit(run_dummy_app())

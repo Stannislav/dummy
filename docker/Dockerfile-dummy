@@ -5,4 +5,4 @@ COPY . /tmp
 RUN pip install /tmp
 EXPOSE 8080
 
-ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:8080", "dummy.servers.webapp:create_app()"]
+ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:8080", "dummy.servers:get_dummy_app()"]

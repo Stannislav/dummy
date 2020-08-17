@@ -5,4 +5,4 @@ COPY . /tmp
 RUN pip install /tmp
 EXPOSE 8081
 
-ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:8081", "dummy.servers.smarty:get_smarty_app()"]
+ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:8081", "dummy.servers:get_smarty_app()"]
