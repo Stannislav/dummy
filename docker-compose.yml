@@ -5,7 +5,7 @@ services:
     container_name: $DUMMY_HOST
     build:
       context: .
-      dockerfile: docker/Dockerfile-dummy
+      dockerfile: docker/dummy.Dockerfile
     image: dummyweb
     ports:
       - "$DUMMY_PORT:8080"
@@ -19,7 +19,7 @@ services:
     container_name: $SMARTY_HOST
     build:
       context: .
-      dockerfile: docker/Dockerfile-smarty
+      dockerfile: docker/smarty.Dockerfile
     image: smartyweb
     ports:
       - "$SMARTY_PORT:8081"
